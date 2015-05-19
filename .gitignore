@@ -26,3 +26,8 @@
 *.exe
 *.out
 *.app
+a.out
+data.txt
+*.swp
+*.gch
+*.swo
