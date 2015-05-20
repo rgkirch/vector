@@ -1,29 +1,38 @@
 #include <iostream>
-// template <typename T>
+
+template <typename T>
 class Vector {
-	// T* elem;
-	int* elem;
-	int sz;
+	T* elem;
+	unsigned int sz;
 public:
 	Vector() : sz{0}, elem{nullptr} {}
-	//****************
-	Vector(int size) : sz{size}, elem{new int[size]} {}
-	//explicit Vector(int size) : sz{size}, elem{new int[size]} {}
-	//****************
-	int& operator[] (int index) {return elem[index];}
+	explicit Vector(int size) : sz{size}, elem{new int[size]} {}
+	Vector(std::initializer_list<T> init) : sz{static_cast<unsigned int>(init.size())}
+	{
+		for( int index = 0; index < sz; ++index )
+		{
+			elem[index] = init[index];
+		}
+	}
+	T& operator[] (int index) {return elem[index];}
+	const T& operator[] (int index) const {return elem[index];}
 	int size() {return sz;}
+	int* begin() {return elem;}
+	int* end() {return elem+sz;}
+	void hello();
 };
+
+template <typename T>
+void Vector<T>::hello()
+{
+	std::cout << "hello" << std::endl;
+}
 
 int main( int argc, char* argv[] )
 {
-	// Vector vec = 100;
-	//****************
-	Vector vec = 100;
-	// Vector vec(100);
-	//****************
-	std::cout << vec.size() << std::endl;
-	std::cout << vec[0] << std::endl;
-	vec[0] = 9;
-	std::cout << vec[0] << std::endl;
+	using namespace std;
+	Vector<int> vec(10);
+	vec.hello();
+	cout << vec[0] << endl;
 	return 0;
 }
