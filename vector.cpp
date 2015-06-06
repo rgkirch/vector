@@ -1,49 +1,41 @@
 #include <iostream>
+#include "vector.h"
 
 template <typename T>
 class Vector {
 	T* elem;
-	unsigned int sz;
+	// number of full spots
+	unsigned int size;
+	// number of total spots
+	unsigned int allocated;
 public:
 	Vector();
 	explicit Vector( int );
+	// initializer constructor (copies)
 	Vector( std::initializer_list<T> );
+	// copy constructor
+	Vector( const Vector& );
+	// move constructor
+	Vector( Vector&& );
+	// copy assignment
+	Vector& operator=( const Vector& );
+	// move assignment
+	Vector& operator=( Vector&& );
+	// destructor
+	~Vector();
+	// subscript - implemented here
 	T& operator[] ( int index ) { return elem[index]; }
+	// subscript - implemented here
 	const T& operator[] ( int index ) const { return elem[index]; }
-	int size() { return sz; }
+	// allocate that much space
+	Vector& reserve( int );
+	// append element to the end
+	Vector& push_back( T& );
+	// return number of full spots
+	int size() { return size; }
+	// begin and end allow the for each iterator to work
+	// return pointer to array
 	int* begin() { return elem; }
-	int* end() { return elem+sz; }
-	void hello();
+	// return pointer to one after end
+	int* end() { return elem+size; }
 };
-
-template <typename T>
-Vector<T>::Vector() : sz{0}, elem{nullptr}
-{}
-
-template <typename T>
-Vector<T>::Vector( int size ) : sz{size}, elem{new T[size]}
-{}
-
-template <typename T>
-Vector<T>::Vector( std::initializer_list<T> init ) : sz{static_cast<unsigned int>( init.size() )}
-{
-	for( int index = 0; index < sz; ++index )
-	{
-		elem[index] = init[index];
-	}
-}
-
-template <typename T>
-void Vector<T>::hello()
-{
-	std::cout << "hello" << std::endl;
-}
-
-int main( int argc, char* argv[] )
-{
-	using namespace std;
-	Vector<int> vec(10);
-	vec.hello();
-	cout << vec[0] << endl;
-	return 0;
-}
