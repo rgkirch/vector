@@ -1,4 +1,6 @@
+// algo for copy
 #include <algorithm>
+// assert for assert
 #include <assert.h>
 #include "vector.hpp"
 #define BASE_LENGTH 8
